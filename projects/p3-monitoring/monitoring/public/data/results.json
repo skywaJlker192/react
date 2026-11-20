@@ -1,0 +1,269 @@
+{
+  "history": [
+    {
+      "time": "2026-11-20T06:46:15.516Z",
+      "checks": [
+        {
+          "id": "git",
+          "ok": true,
+          "status": 200,
+          "ms": 81,
+          "error": "",
+          "title": "Справочник по Git и GitHub · Макаров Максим Николаевич"
+        },
+        {
+          "id": "mongodb",
+          "ok": true,
+          "status": 200,
+          "ms": 12,
+          "error": "",
+          "title": "Справочник по MongoDB · Макаров Максим Николаевич"
+        },
+        {
+          "id": "english",
+          "ok": true,
+          "status": 200,
+          "ms": 21,
+          "error": "",
+          "title": "Разговорный английский · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sysprog",
+          "ok": true,
+          "status": 200,
+          "ms": 8,
+          "error": "",
+          "title": "Справочник по системному программированию · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sphinx",
+          "ok": true,
+          "status": 200,
+          "ms": 4,
+          "error": "",
+          "title": "Отчёт кафе 1.0"
+        },
+        {
+          "id": "staryy",
+          "ok": false,
+          "status": 404,
+          "ms": 4,
+          "error": "",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "time": "2026-11-20T06:46:13.317Z",
+      "checks": [
+        {
+          "id": "git",
+          "ok": true,
+          "status": 200,
+          "ms": 80,
+          "error": "",
+          "title": "Справочник по Git и GitHub · Макаров Максим Николаевич"
+        },
+        {
+          "id": "mongodb",
+          "ok": true,
+          "status": 200,
+          "ms": 6,
+          "error": "",
+          "title": "Справочник по MongoDB · Макаров Максим Николаевич"
+        },
+        {
+          "id": "english",
+          "ok": true,
+          "status": 200,
+          "ms": 24,
+          "error": "",
+          "title": "Разговорный английский · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sysprog",
+          "ok": true,
+          "status": 200,
+          "ms": 6,
+          "error": "",
+          "title": "Справочник по системному программированию · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sphinx",
+          "ok": true,
+          "status": 200,
+          "ms": 6,
+          "error": "",
+          "title": "Отчёт кафе 1.0"
+        },
+        {
+          "id": "staryy",
+          "ok": false,
+          "status": 404,
+          "ms": 5,
+          "error": "",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "time": "2026-11-20T06:46:03.610Z",
+      "checks": [
+        {
+          "id": "git",
+          "ok": true,
+          "status": 200,
+          "ms": 80,
+          "error": "",
+          "title": "Справочник по Git и GitHub · Макаров Максим Николаевич"
+        },
+        {
+          "id": "mongodb",
+          "ok": true,
+          "status": 200,
+          "ms": 6,
+          "error": "",
+          "title": "Справочник по MongoDB · Макаров Максим Николаевич"
+        },
+        {
+          "id": "english",
+          "ok": true,
+          "status": 200,
+          "ms": 9,
+          "error": "",
+          "title": "Разговорный английский · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sysprog",
+          "ok": true,
+          "status": 200,
+          "ms": 28,
+          "error": "",
+          "title": "Справочник по системному программированию · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sphinx",
+          "ok": true,
+          "status": 200,
+          "ms": 5,
+          "error": "",
+          "title": "Отчёт кафе 1.0"
+        },
+        {
+          "id": "staryy",
+          "ok": false,
+          "status": 404,
+          "ms": 4,
+          "error": "",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "time": "2026-11-20T06:46:01.405Z",
+      "checks": [
+        {
+          "id": "git",
+          "ok": true,
+          "status": 200,
+          "ms": 91,
+          "error": "",
+          "title": "Справочник по Git и GitHub · Макаров Максим Николаевич"
+        },
+        {
+          "id": "mongodb",
+          "ok": true,
+          "status": 200,
+          "ms": 7,
+          "error": "",
+          "title": "Справочник по MongoDB · Макаров Максим Николаевич"
+        },
+        {
+          "id": "english",
+          "ok": true,
+          "status": 200,
+          "ms": 6,
+          "error": "",
+          "title": "Разговорный английский · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sysprog",
+          "ok": true,
+          "status": 200,
+          "ms": 9,
+          "error": "",
+          "title": "Справочник по системному программированию · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sphinx",
+          "ok": true,
+          "status": 200,
+          "ms": 9,
+          "error": "",
+          "title": "Отчёт кафе 1.0"
+        },
+        {
+          "id": "staryy",
+          "ok": false,
+          "status": 404,
+          "ms": 5,
+          "error": "",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "time": "2026-11-20T06:45:59.246Z",
+      "checks": [
+        {
+          "id": "git",
+          "ok": true,
+          "status": 200,
+          "ms": 94,
+          "error": "",
+          "title": "Справочник по Git и GitHub · Макаров Максим Николаевич"
+        },
+        {
+          "id": "mongodb",
+          "ok": true,
+          "status": 200,
+          "ms": 5,
+          "error": "",
+          "title": "Справочник по MongoDB · Макаров Максим Николаевич"
+        },
+        {
+          "id": "english",
+          "ok": true,
+          "status": 200,
+          "ms": 6,
+          "error": "",
+          "title": "Разговорный английский · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sysprog",
+          "ok": true,
+          "status": 200,
+          "ms": 6,
+          "error": "",
+          "title": "Справочник по системному программированию · Макаров Максим Николаевич"
+        },
+        {
+          "id": "sphinx",
+          "ok": true,
+          "status": 200,
+          "ms": 261,
+          "error": "",
+          "title": "Отчёт кафе 1.0"
+        },
+        {
+          "id": "staryy",
+          "ok": false,
+          "status": 404,
+          "ms": 4,
+          "error": "",
+          "title": ""
+        }
+      ]
+    }
+  ]
+}

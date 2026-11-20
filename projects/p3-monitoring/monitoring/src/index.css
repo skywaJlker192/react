@@ -1,0 +1,277 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f6f9;
+  color: #1f2430;
+}
+
+.header {
+  padding: 24px 32px;
+  background: #1f2430;
+  color: #ffffff;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.header p {
+  margin: 6px 0 0;
+  color: #c4cad8;
+}
+
+/* Меню на NavLink: текущий пункт выделяется классом active (глава 3.1) */
+.nav {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.nav a {
+  color: #8f97a8;
+  text-decoration: none;
+  font-weight: 600;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav a:hover {
+  color: #c4cad8;
+}
+
+.nav a.active {
+  color: #ffffff;
+  border-bottom-color: #3ddc84;
+}
+
+.main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+/* Сводка над списком */
+.summary {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2e9d5b;
+}
+
+.summary--bad {
+  color: #d23b3b;
+}
+
+.list-tools {
+  margin-bottom: 14px;
+}
+
+.filter {
+  padding: 8px 14px;
+  border: 1px solid #dfe3eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1f2430;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter:hover {
+  border-color: #b9c1d1;
+}
+
+.filter.active {
+  background: #1f2430;
+  border-color: #1f2430;
+  color: #ffffff;
+}
+
+.sites {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site {
+  padding: 16px;
+  border: 1px solid #dfe3eb;
+  border-radius: 8px;
+  background: #ffffff;
+  border-left: 6px solid #2e9d5b;
+}
+
+.site--bad {
+  border-left-color: #d23b3b;
+}
+
+.site__status {
+  display: block;
+  margin-bottom: 6px;
+  color: #2e9d5b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.site--bad .site__status {
+  color: #d23b3b;
+}
+
+.site h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.site h2 a {
+  color: #1f2430;
+  text-decoration: none;
+}
+
+.site h2 a:hover {
+  color: #2f6fde;
+}
+
+.site a {
+  color: #2f6fde;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.site__uptime {
+  display: block;
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* Страница сайта */
+.site--page {
+  border-left-width: 6px;
+  margin-bottom: 20px;
+}
+
+.site--page h2 {
+  font-size: 22px;
+}
+
+.site__title {
+  margin: 10px 0 0;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: #2f6fde;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.history-title {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.history {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border: 1px solid #dfe3eb;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.history th,
+.history td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.history th {
+  background: #f0f2f7;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.history tr:last-child td {
+  border-bottom: none;
+}
+
+/* Неудачные проверки выделены */
+.row--bad td {
+  background: #fde8e8;
+  color: #b42318;
+}
+
+.history__ms {
+  min-width: 180px;
+}
+
+/* Полосы времени ответа (доп. задание) */
+.bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #eef0f5;
+  overflow: hidden;
+}
+
+.bar__fill {
+  height: 100%;
+  border-radius: 4px;
+  background: #2e9d5b;
+}
+
+.bar__fill--bad {
+  background: #d23b3b;
+}
+
+.bar__label {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.row--bad .bar__label {
+  color: #b42318;
+}
+
+.page h2 {
+  margin: 0 0 12px;
+}
+
+.page p {
+  line-height: 1.6;
+}
+
+.page code {
+  background: #eef0f5;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.empty {
+  color: #6b7280;
+}
+
+.load-error {
+  padding: 16px;
+  border-radius: 8px;
+  background: #fde8e8;
+  color: #b42318;
+}
