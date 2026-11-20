@@ -1,0 +1,323 @@
+{
+  "name": "Кнопка «Взять в работу»",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds",
+              "secondsInterval": 15
+            }
+          ]
+        }
+      },
+      "name": "Таймер 15 секунд",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -500,
+        40
+      ],
+      "id": "94bb2795-0f6d-4d31-baf4-c2e9ce8128d9"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_TOKEN }}/getUpdates",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "timeout",
+              "value": "0"
+            },
+            {
+              "name": "allowed_updates",
+              "value": "[\"callback_query\"]"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Получить нажатия",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -280,
+        40
+      ],
+      "id": "03739252-b65e-43e1-8961-6bc9adfa7e7b"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cond1",
+              "leftValue": "={{ $json.result.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Есть нажатия?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -60,
+        40
+      ],
+      "id": "18f459db-4e30-4730-bb23-5ae2211abfbf"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_TOKEN }}/getUpdates",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "offset",
+              "value": "={{ $json.result[$json.result.length - 1].update_id + 1 }}"
+            },
+            {
+              "name": "timeout",
+              "value": "0"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Сдвинуть offset",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        170,
+        -110
+      ],
+      "id": "c9181508-82b4-46eb-bd3d-91adf72ab242"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "result",
+        "options": {}
+      },
+      "name": "Разобрать по одному",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        170,
+        140
+      ],
+      "id": "0b9010c3-ce13-42f2-bd22-e3a076603fe5"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "g1",
+              "name": "id",
+              "value": "={{ $json.callback_query.data.replace('vzyat:', '') }}",
+              "type": "string"
+            },
+            {
+              "id": "g2",
+              "name": "queryId",
+              "value": "={{ $json.callback_query.id }}",
+              "type": "string"
+            },
+            {
+              "id": "g3",
+              "name": "chatId",
+              "value": "={{ $json.callback_query.message.chat.id }}",
+              "type": "string"
+            },
+            {
+              "id": "g4",
+              "name": "messageId",
+              "value": "={{ $json.callback_query.message.message_id }}",
+              "type": "string"
+            },
+            {
+              "id": "g5",
+              "name": "text",
+              "value": "={{ $json.callback_query.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "g6",
+              "name": "master",
+              "value": "={{ $json.callback_query.from.first_name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Данные нажатия",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        140
+      ],
+      "id": "d61301a3-3b9f-4e29-944b-bea698e151eb"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=http://pocketbase:8090/api/collections/zayavki/records/{{ $json.id }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { status: 'В работе' } }}",
+        "options": {}
+      },
+      "name": "Статус в базе",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        630,
+        140
+      ],
+      "id": "dcca9a90-8507-4526-b6a1-97b5aff8d064"
+    },
+    {
+      "parameters": {
+        "resource": "callback",
+        "queryId": "={{ $('Данные нажатия').item.json.queryId }}",
+        "additionalFields": {
+          "text": "Принято, заявка закреплена за вами"
+        }
+      },
+      "name": "Ответ боту",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        860,
+        140
+      ],
+      "id": "14899e98-acb0-4559-89fe-90d5acb63af5",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $('Данные нажатия').item.json.chatId }}",
+        "messageId": "={{ $('Данные нажатия').item.json.messageId }}",
+        "text": "={{ $('Данные нажатия').item.json.text }}\n\n🔧 В работе · взял: {{ $('Данные нажатия').item.json.master }}",
+        "additionalFields": {}
+      },
+      "name": "Правка сообщения",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1090,
+        140
+      ],
+      "id": "0fbde5b1-c69f-46ba-accd-fa9b3e414011",
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Таймер 15 секунд": {
+      "main": [
+        [
+          {
+            "node": "Получить нажатия",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Получить нажатия": {
+      "main": [
+        [
+          {
+            "node": "Есть нажатия?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Есть нажатия?": {
+      "main": [
+        [
+          {
+            "node": "Сдвинуть offset",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Разобрать по одному",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Разобрать по одному": {
+      "main": [
+        [
+          {
+            "node": "Данные нажатия",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Данные нажатия": {
+      "main": [
+        [
+          {
+            "node": "Статус в базе",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Статус в базе": {
+      "main": [
+        [
+          {
+            "node": "Ответ боту",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ответ боту": {
+      "main": [
+        [
+          {
+            "node": "Правка сообщения",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

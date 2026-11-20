@@ -1,0 +1,51 @@
+# Автоматизация доски заявок: n8n + PocketBase + Ollama.
+# Перед первым запуском: cp .env.example .env и впишите токен бота и chat id.
+# Запуск: docker compose up -d
+
+services:
+  n8n:
+    image: n8nio/n8n:2.45.4
+    container_name: kurss-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=Europe/Moscow
+      - TZ=Europe/Moscow
+      - N8N_DEFAULT_LOCALE=en
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - pocketbase
+      - ollama
+
+  pocketbase:
+    build: ./pocketbase
+    container_name: kurss-pocketbase
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - pb_data:/pb/pb_data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8090/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  ollama:
+    image: ollama/ollama:0.40.12
+    container_name: kurss-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  n8n_data:
+  pb_data:
+  ollama_data:
