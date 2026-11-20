@@ -1,38 +1,26 @@
-# Доска заявок общежития · React + PocketBase + n8n
+# react_kurs · справочник по Angular и React
 
-Учебный проект по курсу React (модуль 2): жители общежития оставляют заявки
-о поломках и бытовых проблемах, а диспетчер получает их в Telegram и берёт
-в работу прямо из чата. Языковая модель сама определяет категорию и срочность.
-
-## Что внутри
+Работы по дисциплине (справочник М. Н. Макарова, вариант «Общежитие»).
 
 ```
-doska-zayavok/      приложение на React 19 + TypeScript + Vite
-avtomatizaciya/
-  compose.yaml      n8n + PocketBase + Ollama одной командой
-  pocketbase/       Dockerfile базы и схема коллекции (pb_schema.json)
-  n8n/              два workflow для импорта в n8n
-  Modelfile         локальная модель для классификации заявок
+avtomatizaciya/                 автоматизация к проектам
+  compose.yaml                  n8n + PocketBase + Ollama одной командой
+  .env.example                  образец; настоящий .env в Git не попадает
+  zayavka-telegram.json         модуль 1: заявка → n8n → Telegram
+  n8n/
+    ii-dispetcher.json          модуль 2: ИИ-диспетчер
+    knopka-vzyat.json           модуль 2: кнопка «Взять» в Telegram
+  pocketbase/                   образ базы и схема коллекции obshchezhitie
+  Modelfile                     локальная модель для диспетчера
+projects/
+  p1-zayavki-obshchezhitie/     модуль 1: доска на localStorage
+  p2-zayavki-obshchezhitie/     модуль 2: доска с PocketBase и ИИ-диспетчером
+  p3-monitoring/                модуль 3: README.md и ai-log.md (код — в репозитории monitoring)
 ```
 
-## Как это работает
-
-1. Житель заполняет форму → заявка сохраняется в PocketBase со статусом «Новая».
-2. Приложение отправляет заявку на вебхук n8n `novaya-zayavka`.
-3. Workflow «Диспетчер заявок» прогоняет текст через Ollama (qwen2.5:3b),
-   модель возвращает JSON: категория, срочность, краткое описание.
-4. Категория и срочность записываются обратно в базу, а в Telegram уходит
-   сообщение с кнопкой «Взять в работу».
-5. Workflow «Кнопка „Взять в работу“» опрашивает нажатия, ставит статус
-   «В работе» и подписывает в сообщении, кто взял заявку.
-6. Доска подписана на realtime-события PocketBase, поэтому изменения из
-   Telegram появляются в браузере без перезагрузки.
-
-Статусы: `Новая → В работе → Готово`. Завершённые заявки убираются с доски.
+В каждом проекте есть свой `README.md` и `ai-log.md`. `node_modules` и `dist` в Git не попадают.
 
 ## Быстрый старт
-
-### 1. Инфраструктура
 
 ```bash
 cd avtomatizaciya
@@ -40,28 +28,7 @@ cp .env.example .env        # впишите TELEGRAM_TOKEN и TELEGRAM_CHAT_ID
 docker compose up -d
 ```
 
-- PocketBase: http://localhost:8090/_/ — создайте админа, затем
-  Settings → Import collections и вставьте содержимое `pocketbase/pb_schema.json`.
-- n8n: http://localhost:5678 — импортируйте оба workflow из папки `n8n/`,
-  в телеграм-узлах выберите свои credentials бота и активируйте workflow.
-- Ollama: подготовьте модель по инструкции в комментариях `Modelfile`
-  (или `docker compose exec ollama ollama pull qwen2.5:3b`).
-
-### 2. Приложение
-
-```bash
-cd doska-zayavok
-npm install
-npm run dev
-```
-
-Откройте http://localhost:5173. Адреса базы и вебхука при необходимости
-меняются через `.env` (образец — `.env.example`).
-
-## Проверка связки
-
-1. Создайте заявку в браузере — она появится на доске.
-2. В Telegram придёт сообщение с категорией от модели и кнопкой.
-3. Нажмите «Взять в работу» — статус на доске сам сменится на «В работе».
-
-Подробности по приложению — в `doska-zayavok/README.md`.
+- n8n: http://localhost:5678, импортируйте нужные процессы, выберите credentials бота и опубликуйте.
+- PocketBase: http://localhost:8090/_/, создайте админа и импортируйте `pocketbase/pb_schema.json`
+  (Settings → Import collections).
+- Приложение: `cd projects/p1-zayavki-obshchezhitie` (или `p2-…`), затем `npm install && npm run dev`.

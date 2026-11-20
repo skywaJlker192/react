@@ -6,7 +6,7 @@
     "listRule": "",
     "viewRule": "",
     "createRule": "status = 'Новая'",
-    "updateRule": "status != 'Готово'",
+    "updateRule": "status != 'Готово' && @request.body.title:isset = false && @request.body.room:isset = false && @request.body.details:isset = false",
     "deleteRule": "status = 'Готово'",
     "fields": [
       {

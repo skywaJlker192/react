@@ -1,8 +1,8 @@
 # Локальная модель для ИИ-диспетчера.
 # Подготовка (один раз):
 #   1. скачайте gguf-файл Qwen2.5 3B Instruct и положите его в /tmp/qwen.gguf
-#   2. docker cp /tmp/qwen.gguf kurss-ollama:/tmp/qwen.gguf
-#   3. docker cp Modelfile kurss-ollama:/tmp/Modelfile
+#   2. docker compose cp /tmp/qwen.gguf ollama:/tmp/qwen.gguf
+#   3. docker compose cp Modelfile ollama:/tmp/Modelfile
 #   4. docker compose exec ollama ollama create qwen2.5:3b -f /tmp/Modelfile
 # Альтернативно, если есть интернет: docker compose exec ollama ollama pull qwen2.5:3b
 

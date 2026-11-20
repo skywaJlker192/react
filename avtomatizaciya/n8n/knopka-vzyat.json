@@ -1,5 +1,5 @@
 {
-  "name": "Кнопка «Взять в работу»",
+  "name": "Кнопка «Взять»",
   "nodes": [
     {
       "parameters": {
@@ -178,7 +178,7 @@
     {
       "parameters": {
         "method": "PATCH",
-        "url": "=http://pocketbase:8090/api/collections/zayavki/records/{{ $json.id }}",
+        "url": "=http://pocketbase:8090/api/collections/obshchezhitie/records/{{ $json.id }}",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={{ { status: 'В работе' } }}",

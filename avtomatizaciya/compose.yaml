@@ -1,11 +1,11 @@
 # Автоматизация доски заявок: n8n + PocketBase + Ollama.
 # Перед первым запуском: cp .env.example .env и впишите токен бота и chat id.
+# Файл .env в Git не попадает (см. .gitignore).
 # Запуск: docker compose up -d
 
 services:
   n8n:
     image: n8nio/n8n:2.45.4
-    container_name: kurss-n8n
     restart: unless-stopped
     ports:
       - "5678:5678"
@@ -24,7 +24,6 @@ services:
 
   pocketbase:
     build: ./pocketbase
-    container_name: kurss-pocketbase
     restart: unless-stopped
     ports:
       - "8090:8090"
@@ -38,7 +37,6 @@ services:
 
   ollama:
     image: ollama/ollama:0.40.12
-    container_name: kurss-ollama
     restart: unless-stopped
     ports:
       - "11434:11434"

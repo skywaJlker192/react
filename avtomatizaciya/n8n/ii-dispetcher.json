@@ -1,0 +1,200 @@
+{
+  "name": "ИИ-диспетчер",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "novaya-zayavka",
+        "options": {
+          "allowedOrigins": "http://localhost:5173"
+        }
+      },
+      "name": "Приём заявки",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -440,
+        0
+      ],
+      "webhookId": "novaya-zayavka",
+      "id": "3e943084-5cd4-4458-b100-c080d483dd2b"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ollama:11434/api/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  model: 'qwen2.5:3b',\n  stream: false,\n  format: {\n    type: 'object',\n    properties: {\n      category: { type: 'string', enum: ['Сантехника', 'Электрика', 'Мебель', 'Интернет'] },\n      urgent: { type: 'boolean' },\n      summary: { type: 'string' }\n    },\n    required: ['category', 'urgent', 'summary']\n  },\n  messages: [\n    { role: 'system', content: 'Ты диспетчер общежития №3. Прочитай заявку жителя и верни JSON из трёх полей: категория (Сантехника, Электрика, Мебель, Интернет), срочность и краткое описание до 15 слов. Срочно — если есть потоп, искры, запах гари, или в комнате целиком пропал интернет. Категорию от жителя используй как подсказку, но исправляй её, если она не подходит. Отвечай только JSON.' },\n    { role: 'user', content: 'Заявка: ' + $json.body.title + '\\nКомната: ' + $json.body.room + '\\nКатегория от жителя: ' + $json.body.category + '\\nПодробности: ' + $json.body.details }\n  ]\n} }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "name": "Классификация",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -200,
+        0
+      ],
+      "id": "4b8cdd8f-2896-451d-badf-88cdad062909"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f1",
+              "name": "id",
+              "value": "={{ $('Приём заявки').item.json.body.id }}",
+              "type": "string"
+            },
+            {
+              "id": "f2",
+              "name": "title",
+              "value": "={{ $('Приём заявки').item.json.body.title }}",
+              "type": "string"
+            },
+            {
+              "id": "f3",
+              "name": "room",
+              "value": "={{ $('Приём заявки').item.json.body.room }}",
+              "type": "string"
+            },
+            {
+              "id": "f4",
+              "name": "category",
+              "value": "={{ JSON.parse($json.message.content).category }}",
+              "type": "string"
+            },
+            {
+              "id": "f5",
+              "name": "urgent",
+              "value": "={{ JSON.parse($json.message.content).urgent }}",
+              "type": "boolean"
+            },
+            {
+              "id": "f6",
+              "name": "summary",
+              "value": "={{ JSON.parse($json.message.content).summary }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Разбор ответа",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        40,
+        0
+      ],
+      "id": "39eddf99-693f-476e-b4ca-d3c9b733327a"
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=http://pocketbase:8090/api/collections/obshchezhitie/records/{{ $json.id }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { category: $json.category, urgent: $json.urgent } }}",
+        "options": {}
+      },
+      "name": "Обновить запись",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        0
+      ],
+      "id": "f10ccde3-f412-4da6-9ddf-bf6a6f2848ce"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "text": "={{ $('Разбор ответа').item.json.urgent ? '🔥 СРОЧНАЯ ЗАЯВКА\\n' : '🛠️ Новая заявка\\n' }}Комната {{ $('Разбор ответа').item.json.room }} · {{ $('Разбор ответа').item.json.category }}\n{{ $('Разбор ответа').item.json.title }}\n{{ $('Разбор ответа').item.json.summary }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "Взять",
+                    "additionalFields": {
+                      "callback_data": "=vzyat:{{ $('Разбор ответа').item.json.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "name": "Сообщение в Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        520,
+        0
+      ],
+      "id": "4fa74dfd-aca7-4a82-a203-996a10870f3d"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Приём заявки": {
+      "main": [
+        [
+          {
+            "node": "Классификация",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Классификация": {
+      "main": [
+        [
+          {
+            "node": "Разбор ответа",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Разбор ответа": {
+      "main": [
+        [
+          {
+            "node": "Обновить запись",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Обновить запись": {
+      "main": [
+        [
+          {
+            "node": "Сообщение в Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

@@ -1,0 +1,420 @@
+:root {
+  --bg: #eef2f0;
+  --surface: #ffffff;
+  --ink: #21302b;
+  --muted: #64756e;
+  --line: #d7e0db;
+  --accent: #0e7a5f;
+  --accent-dark: #0a5c48;
+  --new-bg: #fdf0d3;
+  --new-ink: #92600a;
+  --work-bg: #ddeafc;
+  --work-ink: #1d5bbf;
+  --done-bg: #dcf3e4;
+  --done-ink: #177245;
+  --danger: #b3261e;
+  --danger-bg: #fdecea;
+
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+}
+
+/* Шапка */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 20px 28px;
+  background: #1d2b26;
+  color: #f2f7f4;
+}
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.topbar__logo {
+  font-size: 34px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.topbar p {
+  margin: 2px 0 0;
+  color: #9fb4ab;
+  font-size: 14px;
+}
+
+.topbar__counters {
+  display: flex;
+  gap: 8px;
+}
+
+.topbar__badge {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  background: #31463e;
+}
+
+.topbar__badge--new {
+  background: var(--accent);
+}
+
+.topbar__badge--work {
+  background: #31463e;
+}
+
+/* Сетка страницы */
+
+.board {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: start;
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+}
+
+/* Форма */
+
+.panel {
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgb(33 48 43 / 6%);
+}
+
+.panel h2,
+.feed h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.panel label {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.panel input,
+.panel select,
+.panel textarea {
+  margin-bottom: 8px;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  background: #fbfdfc;
+}
+
+.panel input:focus,
+.panel select:focus,
+.panel textarea:focus,
+.feed__search:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.panel textarea {
+  resize: vertical;
+}
+
+.panel__counter {
+  align-self: flex-end;
+  margin: -6px 0 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.panel__submit {
+  padding: 11px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.panel__submit:hover {
+  background: var(--accent-dark);
+}
+
+.panel__hint {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.panel__error {
+  margin: 0 0 8px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-size: 14px;
+}
+
+/* Лента заявок */
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feed__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.feed__head h2 {
+  margin: 0;
+}
+
+.feed__search {
+  flex: 1;
+  min-width: 220px;
+  max-width: 340px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font: inherit;
+  background: var(--surface);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.chip--on {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.chip__num {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.flash {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  background: #e2f1ea;
+  font-size: 14px;
+}
+
+.placeholder {
+  padding: 28px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.crash {
+  padding: 16px;
+  border: 1px solid #f0c4c0;
+  border-radius: 12px;
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.crash p {
+  margin: 0 0 10px;
+}
+
+.crash button {
+  padding: 7px 14px;
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--danger);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Карточка заявки */
+
+.ticket {
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgb(33 48 43 / 6%);
+}
+
+.ticket__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+
+.ticket__place {
+  color: var(--muted);
+}
+
+.ticket__flags {
+  display: flex;
+  gap: 6px;
+}
+
+.pill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.pill--new {
+  background: var(--new-bg);
+  color: var(--new-ink);
+}
+
+.pill--work {
+  background: var(--work-bg);
+  color: var(--work-ink);
+}
+
+.pill--done {
+  background: var(--done-bg);
+  color: var(--done-ink);
+}
+
+.pill--urgent {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.ticket h3 {
+  margin: 10px 0 4px;
+  font-size: 18px;
+}
+
+.ticket__details {
+  margin: 4px 0 0;
+  color: #3c4a45;
+}
+
+.ticket__details--empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.ticket__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.ticket__buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 7px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--accent);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #e2f1ea;
+}
+
+.btn--ghost {
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+.btn--ghost:hover {
+  background: var(--bg);
+}
+
+.btn--danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.btn--danger:hover {
+  background: var(--danger-bg);
+}
+
+.ticket__age {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.summary {
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    position: static;
+  }
+
+  .topbar {
+    padding: 16px 20px;
+  }
+}
