@@ -1,7 +1,7 @@
 import { PB_URL } from './pb'
 import type { NewTicket, Status, Ticket } from '../types'
 
-const RECORDS_URL = `${PB_URL}/api/collections/zayavki/records`
+const RECORDS_URL = `${PB_URL}/api/collections/obshchezhitie/records`
 const JSON_HEADERS = { 'Content-Type': 'application/json' }
 
 async function request(url: string, init?: RequestInit): Promise<Response> {
@@ -12,7 +12,7 @@ async function request(url: string, init?: RequestInit): Promise<Response> {
     throw new Error('PocketBase не отвечает. Поднимите базу командой docker compose up -d.')
   }
   if (!response.ok) {
-    throw new Error(`База отклонила запрос (код ${response.status}). Проверьте коллекцию «zayavki» и правила доступа.`)
+    throw new Error(`База отклонила запрос (код ${response.status}). Проверьте коллекцию «obshchezhitie» и правила доступа.`)
   }
   return response
 }
